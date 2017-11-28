@@ -11,6 +11,8 @@ var functionObjects = [ //Functions to graph
 var screenWidth = 400; //Width/height of display in pixels
 var divisionCount = 8; //Number of grid divisions to display (multiple of two)
 
+var useSecantRendering = false; //Secant-line rendering or dot rendering
+
 var combineZoom = true; //Combined zoom or individual zoom
 var modifierZoom = 4; //Combined zoom
 var modifierZoomX = 4; //X zoom
@@ -58,6 +60,14 @@ strokeWeight(functionStrokeWeight);
 for(var k = -pixelMidPoint; k <= pixelMidPoint; k=k+plotScale){
     for(var i = 0; i < functionObjects.length; i++){
         stroke(functionObjects[i].color);
-        point(k+pixelMidPoint, (-functionObjects[i].func(k*scaleX)*scaleY)+pixelMidPoint);
+        var x1 = k+pixelMidPoint;
+        var y1 = (-functionObjects[i].func(k*scaleX)*scaleY)+pixelMidPoint;
+        if(useSecantRendering){
+            var x2 = (k-1)+pixelMidPoint;
+            var y2 = (-functionObjects[i].func((k-1)*scaleX)*scaleY)+pixelMidPoint;
+            line(x1, y1, x2, y2);
+        }else{
+            point(x1, y1);
+        }
     }
 }

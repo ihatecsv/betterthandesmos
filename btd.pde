@@ -1,15 +1,6 @@
-// v1.10 BtD™
+// v1.20 BtD™
 // Desmos graph of default functions:
 // https://www.desmos.com/calculator/q8krvyo0cl
-
-//Functions to graph
-var functionObjects=[
-	{func:function(x){return Math.sin(x)},color:color(255,0,0)},
-	{func:function(x){return x*x},color:color(0,0,255)},
-	{func:function(x){return Math.pow(x,x)},color:color(0,255,0)},
-	{func:function(x){return x/(x-4)},color:color(255,179,0)},
-	{func:function(x){return Math.log(x)},color:color(221,0,255)}
-];
 
 //Width/height of display in pixels
 var screenWidth = 800;
@@ -39,6 +30,15 @@ var functionStrokeWeight = 2;
 //Label text size
 var labelTextSize = 10;
 
+//Color list (alternating)
+var colorList = [
+	color(255,0,0),
+	color(0,0,255),
+	color(0,255,0),
+	color(255,179,0),
+	color(221,0,255)
+];
+
 //------------------------------------------------------------
 //                  Caution! Dragons below!
 //------------------------------------------------------------
@@ -48,6 +48,25 @@ void setup() {
 }
 
 void draw() {
+	var colorCount = 0;
+	var functionObjects = [];
+	var funcTexts = document.getElementById('functionText').value.split('\n');
+	funcTexts = funcTexts.map(x => "try{return " + x + "}catch(e){}");
+
+	for(var i = 0; i < funcTexts.length; i++){
+		try{
+			var newFunc = new Function(["x"], funcTexts[i]);
+			functionObjects.push({func:newFunc, color: colorList[colorCount]});
+		}catch(e){
+			var newFunc = function(x){return NaN;};
+			functionObjects.push({func:newFunc, color: colorList[colorCount]});
+		}
+		colorCount++;
+		if(colorCount == colorList.length){
+			colorCount = 0;
+		}
+	}
+
 	background(255);
 	var pixelMid = screenWidth / 2;
 	var spacePerDivision = screenWidth / divisionCount;
@@ -59,6 +78,7 @@ void draw() {
 	var secantBoundOffset = plotDensity * 10;
 
 	//Draw axis
+	stroke(0);
 	strokeWeight(axisStrokeWeight);
 	line(screenWidth / 2, 0, screenWidth / 2, screenWidth);
 	line(0, screenWidth / 2, screenWidth, screenWidth / 2);

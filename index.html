@@ -4,10 +4,19 @@
 		<meta charset="utf8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Example</title>
+		<title>Better than Desmos™</title>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.6/processing.min.js"></script>
+		<style>
+			.center{
+				text-align: center;
+			}
+		</style>
 	</head>
 	<body>
-		<canvas data-processing-sources="btd.pde" width="400" height="400"></canvas>
+		<div class="center">
+			<canvas data-processing-sources="btd.pde"></canvas>
+			</br>
+			<textarea id="functionText" rows="6">Math.sin(x)&#10;x*x&#10;Math.pow(x,x)&#10;x/(x-4)&#10;Math.log(x)</textarea>
+		</div>
 	</body>
 </html>

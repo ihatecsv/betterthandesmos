@@ -1,8 +1,9 @@
-// v1.09 BtD™
+// v1.10 BtD™
 // Desmos graph of default functions:
 // https://www.desmos.com/calculator/q8krvyo0cl
 
-var functionObjects = [ //Functions to graph
+//Functions to graph
+var functionObjects = [
     {func: function(x){return Math.sin(x);}, color: color(255, 0, 0)},
     {func: function(x){return x*x;}, color: color(0, 0, 255)},
     {func: function(x){return Math.pow(x, x);}, color: color(0, 255, 0)},
@@ -10,23 +11,33 @@ var functionObjects = [ //Functions to graph
     {func: function(x){return Math.log(x);}, color: color(221, 0, 255)},
 ];
 
-var screenWidth = 400; //Width/height of display in pixels
-var divisionCount = 8; //Number of grid divisions to display (multiple of two)
+//Width/height of display in pixels
+var screenWidth = 400;
+//Number of grid divisions to display (multiple of two)
+var divisionCount = 8;
 
-var useSecantRendering = true; //Secant-line rendering or dot rendering
-
-var combineZoom = true; //Combined zoom or individual zoom
-var modifierZoom = 8; //Combined zoom
-var modifierZoomX = 4; //X zoom
-var modifierZoomY = 4; //Y zoom
-
-//Plot density (>= 1 looks good for secant-line mode, <= 0.1 looks good for dot mode)
+//Secant-line rendering or dot rendering
+var useSecantRendering = true;
+//Plot density (>= 1 looks good for secant-line, <= 0.1 looks good for dot)
 var plotDensity = 1; 
 
-var axisStrokeWeight = 2; //X and Y axis stroke weight
-var graphStrokeWeight = 1; //Grid line stroke weight
-var functionStrokeWeight = 2; //Function stroke weight
-var labelTextSize = 10; //Label text size
+//Combined zoom or individual zoom
+var combineZoom = true;
+//Combined zoom
+var modifierZoom = 8;
+//Individual X zoom
+var modifierZoomX = 4;
+//Individual Y zoom
+var modifierZoomY = 4;
+
+//X and Y axis stroke weight
+var axisStrokeWeight = 2;
+//Grid line stroke weight
+var graphStrokeWeight = 1;
+//Function stroke weight
+var functionStrokeWeight = 2;
+//Label text size
+var labelTextSize = 10;
 
 //------------------------------------------------------------
 //                  Caution! Dragons below!

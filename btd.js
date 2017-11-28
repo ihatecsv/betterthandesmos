@@ -1,4 +1,4 @@
-//v1.07 BtD™
+//v1.08 BtD™
 
 var functionObjects = [ //Functions to graph
     {func: function(x){return Math.sin(x);}, color: color(255, 0, 0)},
@@ -60,11 +60,11 @@ strokeWeight(functionStrokeWeight);
 for(var k = -pixelMidPoint; k <= pixelMidPoint; k=k+plotScale){
     for(var i = 0; i < functionObjects.length; i++){
         stroke(functionObjects[i].color);
-        var x1 = k+pixelMidPoint;
-        var y1 = (-functionObjects[i].func(k*scaleX)*scaleY)+pixelMidPoint;
+        var x1=k+pixelMidPoint;
+        var y1=(-functionObjects[i].func(k*scaleX)*scaleY)+pixelMidPoint;
         if(useSecantRendering){
-            var x2 = (k-1)+pixelMidPoint;
-            var y2 = (-functionObjects[i].func((k-1)*scaleX)*scaleY)+pixelMidPoint;
+            var x2=(k-plotScale)+pixelMidPoint;
+            var y2=(-functionObjects[i].func((k-plotScale)*scaleX)*scaleY)+pixelMidPoint;
             line(x1, y1, x2, y2);
         }else{
             point(x1, y1);

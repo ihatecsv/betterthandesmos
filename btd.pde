@@ -1,34 +1,6 @@
-// v1.20 BtD™
+// v1.3 BtD™
 // Desmos graph of default functions:
 // https://www.desmos.com/calculator/q8krvyo0cl
-
-//Width/height of display in pixels
-var screenWidth = 800;
-//Number of grid divisions to display (multiple of two)
-var divisionCount = 8;
-
-//Secant-line rendering or dot rendering
-var useSecantRendering = true;
-//Plot density (>= 1 looks good for secant-line, <= 0.1 looks good for dot)
-var plotDensity = 1;
-
-//Combined zoom or individual zoom
-var combineZoom = true;
-//Combined zoom
-var modifierZoom = 8;
-//Individual X zoom
-var modifierZoomX = 4;
-//Individual Y zoom
-var modifierZoomY = 4;
-
-//X and Y axis stroke weight
-var axisStrokeWeight = 2;
-//Grid line stroke weight
-var graphStrokeWeight = 1;
-//Function stroke weight
-var functionStrokeWeight = 2;
-//Label text size
-var labelTextSize = 10;
 
 //Color list (alternating)
 var colorList = [
@@ -42,15 +14,34 @@ var colorList = [
 //------------------------------------------------------------
 //                  Caution! Dragons below!
 //------------------------------------------------------------
-void setup() {
+void draw() {
+	
+	var screenWidth = $("#cContainer").width();
 	size(screenWidth, screenWidth);
 	background(255);
-}
+	
+	var divisionCount = $("#divisionCount").val();
 
-void draw() {
+	var useSecantRendering = $("#useSecantRendering").is(":checked");
+	var plotDensity = parseFloat($("#plotDensity").val());
+	
+	if(plotDensity <= 0){
+		plotDensity = NaN;
+	}
+
+	var combineZoom = $("#combineZoom").is(":checked");
+	var modifierZoom = parseFloat($("#modifierZoom").val());
+	var modifierZoomX = parseFloat($("#modifierZoomX").val());
+	var modifierZoomY = parseFloat($("#modifierZoomY").val());
+
+	var axisStrokeWeight = parseFloat($("#axisStrokeWeight").val());
+	var graphStrokeWeight = parseFloat($("#graphStrokeWeight").val());
+	var functionStrokeWeight = parseFloat($("#functionStrokeWeight").val());
+	var labelTextSize = parseFloat($("#labelTextSize").val());
+	
 	var colorCount = 0;
 	var functionObjects = [];
-	var funcTexts = document.getElementById('functionText').value.split('\n');
+	var funcTexts = $("#functionText").val().split('\n');
 	funcTexts = funcTexts.map(x => "try{return " + x + "}catch(e){}");
 
 	for(var i = 0; i < funcTexts.length; i++){
@@ -66,8 +57,6 @@ void draw() {
 			colorCount = 0;
 		}
 	}
-
-	background(255);
 	var pixelMid = screenWidth / 2;
 	var spacePerDivision = screenWidth / divisionCount;
 	void(combineZoom && ((modifierZoomX = modifierZoom) && (modifierZoomY = modifierZoom)));

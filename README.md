@@ -14,6 +14,7 @@ Original calculator on Khan Academy [here](https://www.khanacademy.org/computer-
 + [Rolling noise](https://drakeluce.com/betterthandesmos/?function=x%25Math.tan(x%20%2B%20Date.now()%2F100)*2)
 + [Stretchy sine wave](https://drakeluce.com/betterthandesmos/?function=Math.sin(x*Date.now()%2F1000))
 + [Oscillating-oscillating trig. functions](https://drakeluce.com/betterthandesmos/?function=Math.sin(x)*Math.sin((Date.now()%2F1000))%0AMath.cos(x)*Math.cos((Date.now()%2F1000))%0AMath.tan(x)*Math.tan((Date.now()%2F1000)))
++ [Square-sine wave](https://drakeluce.com/betterthandesmos/?function=Math.round(x*x%2B%20Date.now()%2F200)%252%20%3F%20-Math.sin(x)%20%3A%20Math.sin(x))
 
 ## Disclaimer
 This is not actually better than Desmos. Desmos is great; this is just a for-fun project. :blush:

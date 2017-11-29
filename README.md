@@ -1,4 +1,4 @@
-# BetterThanDesmos
+# Better than Desmos™
 A graphing calculator originally written on Khan Academy programming! 
 
 ![Screenshot](https://i.imgur.com/cIVYcO0.png)

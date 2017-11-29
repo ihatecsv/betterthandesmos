@@ -14,7 +14,7 @@ Original calculator on Khan Academy [here](https://www.khanacademy.org/computer-
 + [Function gen. waves](https://drakeluce.com/t/betterthandesmos/?function=(Math.sin(((Date.now()%2F3000)%20-%20x)*Math.PI))%2B2%0A(Math.floor((Date.now()%2F2000)%20-%20x)%20%25%202%20%3F%20-1%20%3A%201)%0A((((Date.now()%2F1000)%20-%20x-1)%2F2%20-%20Math.floor(((Date.now()%2F1000)%20-%20x-1)%2F2))*2-1)-2)
 + [Rolling noise](https://drakeluce.com/t/betterthandesmos/?function=x%25Math.tan(x%20%2B%20Date.now()%2F100)*2)
 + [Stretchy sine wave](https://drakeluce.com/t/betterthandesmos/?function=Math.sin(x*Date.now()%2F1000))
-+ [Oscillating-oscillating trig.functions](https://drakeluce.com/t/betterthandesmos/?function=Math.sin(x)*Math.sin((Date.now()%2F1000))%0AMath.cos(x)*Math.cos((Date.now()%2F1000))%0AMath.tan(x)*Math.tan((Date.now()%2F1000)))
++ [Oscillating-oscillating trig. functions](https://drakeluce.com/t/betterthandesmos/?function=Math.sin(x)*Math.sin((Date.now()%2F1000))%0AMath.cos(x)*Math.cos((Date.now()%2F1000))%0AMath.tan(x)*Math.tan((Date.now()%2F1000)))
 
 ## Other info
 

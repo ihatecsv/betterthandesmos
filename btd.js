@@ -42,7 +42,6 @@ if(presetFuncText != null){
 }
 
 var updateForm = function(){
-	screenWidth = $("#cContainer").width();
 	divisionCount = $("#divisionCount").val();
 	useSecantRendering = $("#useSecantRendering").is(":checked");
 	plotDensity = parseFloat($("#plotDensity").val());
@@ -106,17 +105,17 @@ var resizeCanvas = function(){
 	screenWidth = $("#cContainer").width();
 	canvas.width = screenWidth;
 	canvas.height = screenWidth;
+	calculateValues();
 };
 
-$("#settingsForm").on('change', updateForm);
+$("#settingsForm").on('input change', updateForm);
 updateForm();
 
-
-
-$("#cContainer").on('resize', resizeCanvas);
+$(window).on('resize', resizeCanvas);
 resizeCanvas();
 
 drawLoop = function(){
+	console.log(screenWidth);
 	if(plotDensity <= 0){
 		plotDensity = NaN;
 	}

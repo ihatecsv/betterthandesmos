@@ -7,5 +7,8 @@ You can access the calculator [here](https://drakeluce.com/t/betterthandesmos/),
 
 Original calculator on Khan Academy [here](https://www.khanacademy.org/computer-programming/better-than-desmos-a-graphing-calculator/5078845089054720)!
 
+### Note
+This is not very efficient code. Please feel free to make a pull request for optimization!
+
 ### Disclaimer
 This is not actually better than Desmos. Desmos is great; this is just a for-fun project. :blush:

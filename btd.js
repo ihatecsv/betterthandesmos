@@ -1,7 +1,3 @@
-// v1.4 BtD™
-// Desmos graph of default functions:
-// https://www.desmos.com/calculator/q8krvyo0cl
-
 var canvas = document.getElementById("btdCanvas");
 var ctx = canvas.getContext('2d');
 

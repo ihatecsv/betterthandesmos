@@ -18,6 +18,7 @@ Original calculator on Khan Academy [here](https://www.khanacademy.org/computer-
 + [Oscillating-oscillating trig. functions](https://drakeluce.com/betterthandesmos/?function=Math.sin(x)*Math.sin((Date.now()%2F1000))%0AMath.cos(x)*Math.cos((Date.now()%2F1000))%0AMath.tan(x)*Math.tan((Date.now()%2F1000)))
 + [Square-sine wave](https://drakeluce.com/betterthandesmos/?function=Math.round(x*x%2B%20Date.now()%2F200)%252%20%3F%20-Math.sin(x)%20%3A%20Math.sin(x))
 + [Squeezing squeeze function](https://drakeluce.com/betterthandesmos/?function=Math.sin(Date.now()%2F1000)*x*x%0AMath.sin(Date.now()%2F1000)*-x*x%0AMath.sin(Date.now()%2F1000)*x*x*Math.sin(1%2Fx)%0AMath.sin(Date.now()%2F1000)*-x*x*Math.sin(1%2Fx))
++ [Clock (hr., min., sec. from 0 to 6)](https://drakeluce.com/betterthandesmos/?function=(x%20%3C%20new%20Date().getHours()%2F4)%20%2B%204%0A(x%20%3C%20new%20Date().getMinutes()%2F10)%20%2B%202%0A(x%20%3C%20new%20Date().getSeconds()%2F10))
 
 ## Disclaimer
 This is not actually better than Desmos. Desmos is great; this is just a for-fun project. :blush:

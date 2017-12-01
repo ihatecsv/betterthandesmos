@@ -111,7 +111,6 @@ $(window).on('resize', resizeCanvas);
 resizeCanvas();
 
 drawLoop = function(){
-	console.log(screenWidth);
 	if(plotDensity <= 0){
 		plotDensity = NaN;
 	}

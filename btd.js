@@ -227,7 +227,7 @@ drawLoop = function(){
 
 	//Draw functions
 	ctx.lineWidth = functionStrokeWeight;
-	for (var k = -pixelMid; k <= pixelMid; k = k + plotDensity) {
+	for (var k = -pixelMid; k <= pixelMid + plotDensity; k = k + plotDensity) {
 		for (var i = 0; i < functionObjects.length; i++) {
 			ctx.strokeStyle = functionObjects[i].color;
 			ctx.fillStyle = functionObjects[i].color;

@@ -25,11 +25,18 @@ var scaleY;
 var secantBoundOffset;
 
 var colorList = [
-	"rgb(255,0,0)",
-	"rgb(0,0,255)",
-	"rgb(0,255,0)",
-	"rgb(255,179,0)",
-	"rgb(221,0,255)"
+	"rgb(230, 25, 75)", //red
+	"rgb(60, 180, 75)", //green
+	"rgb(0, 130, 200)", //blue
+	"rgb(245, 130, 48)", //orange
+	"rgb(145, 30, 180)", //purple
+	"rgb(255, 225, 25)", //yellow
+	"rgb(70, 240, 240)", //cyan
+	"rgb(240, 50, 230)",  //magenta
+	"rgb(210, 245, 60)", //lime
+	"rgb(250, 190, 190)", //pink
+	"rgb(0, 128, 128)", //teal
+	"rgb(128, 128, 0)" //olive
 ];
 
 var presetFormFromURL = function(){ //TODO: clean this up somehow?!

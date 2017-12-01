@@ -10,6 +10,7 @@ Original calculator on Khan Academy [here](https://www.khanacademy.org/computer-
 ## Function examples
 + [Parabola](https://drakeluce.com/betterthandesmos/?function=x*x)
 + [Sine wave](https://drakeluce.com/betterthandesmos/?function=Math.sin(x))
++ [1st and 2nd derivatives in a range](https://drakeluce.com/betterthandesmos/?function=x%20%3E%200%20%26%26%20x%20%3C%20Math.PI%20%3F%20-Math.cos(x)%20%2B%201%20%3A%20NaN%0Ax%20%3E%200%20%26%26%20x%20%3C%20Math.PI%20%3F%20Math.sin(x)%20%3A%20NaN%0Ax%20%3E%200%20%26%26%20x%20%3C%20Math.PI%20%3F%20Math.cos(x)%20%3A%20NaN%0A)
 + [Function gen. waves](https://drakeluce.com/betterthandesmos/?function=(Math.sin(((Date.now()%2F3000)%20-%20x)*Math.PI))%2B2%0A(Math.floor((Date.now()%2F2000)%20-%20x)%20%25%202%20%3F%20-1%20%3A%201)%0A((((Date.now()%2F1000)%20-%20x-1)%2F2%20-%20Math.floor(((Date.now()%2F1000)%20-%20x-1)%2F2))*2-1)-2)
 + [Rolling noise](https://drakeluce.com/betterthandesmos/?function=x%25Math.tan(x%20%2B%20Date.now()%2F100)*2)
 + [Stretchy sine wave](https://drakeluce.com/betterthandesmos/?function=Math.sin(x*Date.now()%2F1000))

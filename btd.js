@@ -182,7 +182,7 @@ drawLoop = function(){
 					ctx.stroke();
 				}
 			} else {
-				ctx.fillRect(x1, y1,functionStrokeWeight,functionStrokeWeight);
+				ctx.fillRect(x1-(functionStrokeWeight/2), y1-(functionStrokeWeight/2),functionStrokeWeight,functionStrokeWeight);
 			}
 		}
 	}

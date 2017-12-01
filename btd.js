@@ -1,3 +1,7 @@
+// v1.4 BtD™
+// Desmos graph of default functions:
+// https://www.desmos.com/calculator/q8krvyo0cl
+
 var canvas = document.getElementById("btdCanvas");
 var ctx = canvas.getContext('2d');
 
@@ -32,10 +36,62 @@ var colorList = [
 	"rgb(221,0,255)"
 ];
 
-var presetFuncText = (new URL(location)).searchParams.get("function");
-if(presetFuncText != null){
-	$("#functionText").val(presetFuncText);
+var presetFormFromURL = function(){ //TODO: clean this up somehow?!
+	var pFuncText = (new URL(location)).searchParams.get("function");
+	if(pFuncText != null){
+		$("#functionText").val(pFuncText);
+	}
+	var pDivisionCount = (new URL(location)).searchParams.get("divisionCount");
+	if(pDivisionCount != null){
+		$("#divisionCount").val(pDivisionCount);
+	}
+	var pUseSecantRendering = (new URL(location)).searchParams.get("useSecantRendering");
+	if(pUseSecantRendering != null){
+		var pUseSecantRenderingBoolean = (pUseSecantRendering == 'true');
+		$("#useSecantRendering").prop("checked", pUseSecantRenderingBoolean);
+		$("#useDotRendering").prop("checked", !pUseSecantRenderingBoolean);
+	}
+	var pPlotDensity = (new URL(location)).searchParams.get("plotDensity");
+	if(pPlotDensity != null){
+		$("#plotDensity").val(pPlotDensity);
+	}
+	var pCombineZoom = (new URL(location)).searchParams.get("combineZoom");
+	if(pCombineZoom != null){
+		var pCombineZoomBoolean = (pCombineZoom == 'true');
+		$("#combineZoom").prop("checked", pCombineZoomBoolean);
+		$("#noCombineZoom").prop("checked", !pCombineZoomBoolean);
+	}
+	var pModifierZoom = (new URL(location)).searchParams.get("modifierZoom");
+	if(pModifierZoom != null){
+		$("#modifierZoom").val(pModifierZoom);
+	}
+	var pModifierZoomX = (new URL(location)).searchParams.get("modifierZoomX");
+	if(pModifierZoomX != null){
+		$("#modifierZoomX").val(pModifierZoomX);
+	}
+	var pModifierZoomY = (new URL(location)).searchParams.get("modifierZoomY");
+	if(pModifierZoomY != null){
+		$("#modifierZoomY").val(pModifierZoomY);
+	}
+	var pAxisStrokeWeight = (new URL(location)).searchParams.get("axisStrokeWeight");
+	if(pAxisStrokeWeight != null){
+		$("#axisStrokeWeight").val(pAxisStrokeWeight);
+	}
+	var pGraphStrokeWeight = (new URL(location)).searchParams.get("graphStrokeWeight");
+	if(pGraphStrokeWeight != null){
+		$("#graphStrokeWeight").val(pGraphStrokeWeight);
+	}
+	var pFunctionStrokeWeight = (new URL(location)).searchParams.get("functionStrokeWeight");
+	if(pFunctionStrokeWeight){
+		$("#functionStrokeWeight").val(pFunctionStrokeWeight);
+	}
+	var pLabelTextSize = (new URL(location)).searchParams.get("labelTextSize");
+	if(pLabelTextSize != null){
+		$("#labelTextSize").val(pLabelTextSize);
+	}
+	
 }
+presetFormFromURL();
 
 var updateForm = function(){
 	divisionCount = $("#divisionCount").val();
@@ -50,6 +106,7 @@ var updateForm = function(){
 	functionStrokeWeight = parseFloat($("#functionStrokeWeight").val());
 	labelTextSize = parseFloat($("#labelTextSize").val());
 	funcText = $("#functionText").val();
+	changeURL();
 	calculateValues();
 	evaluateFunctions();
 }
@@ -67,9 +124,6 @@ var calculateValues = function(){
 
 var evaluateFunctions = function(){
 	functionObjects = [];
-	var newURL = location.href.split("?")[0] + "?function=" + encodeURIComponent(funcText);
-	history.replaceState({}, '', newURL);
-
 	var colorCount = 0;
 	var funcTexts = funcText.split('\n');
 	funcTexts = funcTexts.map(x => "try{return " + x + "}catch(e){}");
@@ -95,6 +149,23 @@ var evaluateFunctions = function(){
 			colorCount = 0;
 		}
 	}
+}
+
+var changeURL = function(){
+	var newURL = location.href.split("?")[0]
+	newURL += "?function=" + encodeURIComponent(funcText);
+	newURL += "&divisionCount=" + encodeURIComponent(divisionCount);
+	newURL += "&useSecantRendering=" + encodeURIComponent(useSecantRendering);
+	newURL += "&plotDensity=" + encodeURIComponent(plotDensity);
+	newURL += "&combineZoom=" + encodeURIComponent(combineZoom);
+	newURL += "&modifierZoom=" + encodeURIComponent(modifierZoom);
+	newURL += "&modifierZoomX=" + encodeURIComponent(modifierZoomX);
+	newURL += "&modifierZoomY=" + encodeURIComponent(modifierZoomY);
+	newURL += "&axisStrokeWeight=" + encodeURIComponent(axisStrokeWeight);
+	newURL += "&graphStrokeWeight=" + encodeURIComponent(graphStrokeWeight);
+	newURL += "&functionStrokeWeight=" + encodeURIComponent(functionStrokeWeight);
+	newURL += "&labelTextSize=" + encodeURIComponent(labelTextSize);
+	history.replaceState({}, '', newURL);
 }
 
 var resizeCanvas = function(){
@@ -187,5 +258,4 @@ drawLoop = function(){
 	}
 	requestAnimationFrame(drawLoop);
 }
-
 requestAnimationFrame(drawLoop);

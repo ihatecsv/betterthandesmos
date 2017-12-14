@@ -37,5 +37,7 @@ Original calculator on Khan Academy [here](https://www.khanacademy.org/computer-
 + [Clock (hr., min., sec. from 0 to 6)](https://drakeluce.com/betterthandesmos/?function=(x%20%3C%20new%20Date().getHours()%2F4)%20%2B%204%0A(x%20%3C%20new%20Date().getMinutes()%2F10)%20%2B%202%0A(x%20%3C%20new%20Date().getSeconds()%2F10))
 + [x^x thingies](https://drakeluce.com/betterthandesmos/?function=Math.pow(Math.cos(Date.now()%2F1000)%2Cx)%0AMath.pow(Math.cos(Date.now()%2F1000)%2Bx%2Cx)%0AMath.pow(Math.cos(Date.now()%2F1000)-x%2Cx)%0AMath.pow(Math.cos(Date.now()%2F1000)*x%2Cx)%0AMath.pow(Math.cos(Date.now()%2F1000)%2Fx%2Cx)%0AMath.pow(Math.pow(Math.cos(Date.now()%2F1000)%2Cx)%2Cx)&divisionCount=8&useSecantRendering=true&plotDensity=1&combineZoom=true&modifierZoom=8&modifierZoomX=4&modifierZoomY=4&axisStrokeWeight=2&graphStrokeWeight=1&functionStrokeWeight=4&labelTextSize=10)
 
+Make a [pull request](https://github.com/ihatecsv/betterthandesmos/pulls) if you want to add your function here!
+
 ## Disclaimer
 This is not actually better than Desmos. Desmos is great; this is just a for-fun project. :blush:

@@ -169,7 +169,11 @@ var evaluateFunctions = function(){
 						x: x, 
 						t: Date.now()
 					};
-					return mathCode.eval(scope);
+					try{
+						return mathCode.eval(scope);
+					}catch(e){
+						return NaN;
+					}
 				}
 				functionObjects.push({
 					func: newFunc,

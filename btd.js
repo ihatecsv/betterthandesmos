@@ -135,36 +135,16 @@ var calculateValues = function(){
 
 var evaluateFunctions = function(){
 	functionObjects = [];
-	var colorCount = 0;
 	var funcTexts = funcText.split('\n');
-	if(useJSInterpretation){ //Let's just eval that shi*
-		for (var i = 0; i < funcTexts.length; i++) {
-			try {
-				var newFunc = new Function(["x"], "try{return " + funcTexts[i] + "}catch(e){}");
-				functionObjects.push({
-					func: newFunc,
-					color: colorList[colorCount]
-				});
-			} catch (e) {
-				var newFunc = function(x) {
-					return NaN;
-				};
-				functionObjects.push({
-					func: newFunc,
-					color: colorList[colorCount]
-				});
-			}
-			colorCount++;
-			if (colorCount == colorList.length) {
-				colorCount = 0;
-			}
-		}
-	}else{ //Let's use math.js!
-		for (var i = 0; i < funcTexts.length; i++) {
-			try {
+	for (var i = 0; i < funcTexts.length; i++) {
+		let newFunc;
+		try {
+			if(useJSInterpretation){ //Let's just eval that shi*
+				newFunc = new Function(["x"], "try{return " + funcTexts[i] + "}catch(e){}");
+			}else{ //Let's use math.js!
 				const mathNode = math.parse(funcTexts[i]);
 				const mathCode = mathNode.compile();
-				var newFunc = function(x){
+				newFunc = function(x){
 					const scope = {
 						x: x, 
 						t: Date.now()
@@ -175,24 +155,16 @@ var evaluateFunctions = function(){
 						return NaN;
 					}
 				}
-				functionObjects.push({
-					func: newFunc,
-					color: colorList[colorCount]
-				});
-			} catch (e) {
-				var newFunc = function(x) {
-					return NaN;
-				};
-				functionObjects.push({
-					func: newFunc,
-					color: colorList[colorCount]
-				});
 			}
-			colorCount++;
-			if (colorCount == colorList.length) {
-				colorCount = 0;
-			}
+		} catch (e) {
+			newFunc = function(x) {
+				return NaN;
+			};
 		}
+		functionObjects.push({
+			func: newFunc,
+			color: colorList[i%funcTexts.length]
+		});
 	}
 }
 

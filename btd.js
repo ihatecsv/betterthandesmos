@@ -60,6 +60,8 @@ var presetFormFromURL = function(){ //TODO: clean this up somehow?!
 		var pUseJSInterpretationBoolean = (pUseJSInterpretation == 'true');
 		$("#useJSInterpretation").prop("checked", pUseJSInterpretationBoolean);
 		$("#useMathJSInterpretation").prop("checked", !pUseJSInterpretationBoolean);
+		$("#JSfunctionHint").toggle(pUseJSInterpretationBoolean);
+		$("#mathJSfunctionHint").toggle(!pUseJSInterpretationBoolean);
 	}
 	var pPlotDensity = (new URL(location)).searchParams.get("plotDensity");
 	if(pPlotDensity != null){
@@ -106,7 +108,11 @@ presetFormFromURL();
 var updateForm = function(){
 	divisionCount = $("#divisionCount").val();
 	useSecantRendering = $("#useSecantRendering").is(":checked");
+
 	useJSInterpretation = $("#useJSInterpretation").is(":checked");
+	$("#JSfunctionHint").toggle(useJSInterpretation);
+	$("#mathJSfunctionHint").toggle(!useJSInterpretation);
+	
 	plotDensity = parseFloat($("#plotDensity").val());
 	combineZoom = $("#combineZoom").is(":checked");
 	modifierZoom = parseFloat($("#modifierZoom").val());
@@ -147,7 +153,8 @@ var evaluateFunctions = function(){
 				newFunc = function(x){
 					const scope = {
 						x: x, 
-						t: Date.now()
+						t: Date.now(),
+						r: Math.random()
 					};
 					try{
 						return mathCode.eval(scope);

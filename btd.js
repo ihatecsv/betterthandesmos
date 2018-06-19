@@ -5,6 +5,7 @@ var functionObjects = [];
 var screenWidth;
 var divisionCount;
 var useSecantRendering;
+var useJSInterpretation;
 var plotDensity;
 var combineZoom;
 var modifierZoom;
@@ -54,6 +55,12 @@ var presetFormFromURL = function(){ //TODO: clean this up somehow?!
 		$("#useSecantRendering").prop("checked", pUseSecantRenderingBoolean);
 		$("#useDotRendering").prop("checked", !pUseSecantRenderingBoolean);
 	}
+	var pUseJSInterpretation = (new URL(location)).searchParams.get("useJSInterpretation");
+	if(pUseJSInterpretation != null){
+		var pUseJSInterpretationBoolean = (pUseJSInterpretation == 'true');
+		$("#useJSInterpretation").prop("checked", pUseJSInterpretationBoolean);
+		$("#useMathJSInterpretation").prop("checked", !pUseJSInterpretationBoolean);
+	}
 	var pPlotDensity = (new URL(location)).searchParams.get("plotDensity");
 	if(pPlotDensity != null){
 		$("#plotDensity").val(pPlotDensity);
@@ -99,6 +106,7 @@ presetFormFromURL();
 var updateForm = function(){
 	divisionCount = $("#divisionCount").val();
 	useSecantRendering = $("#useSecantRendering").is(":checked");
+	useJSInterpretation = $("#useJSInterpretation").is(":checked");
 	plotDensity = parseFloat($("#plotDensity").val());
 	combineZoom = $("#combineZoom").is(":checked");
 	modifierZoom = parseFloat($("#modifierZoom").val());
@@ -128,28 +136,50 @@ var calculateValues = function(){
 var evaluateFunctions = function(){
 	functionObjects = [];
 	var colorCount = 0;
-	var funcTexts = funcText.split('\n');
-	funcTexts = funcTexts.map(x => "try{return " + x + "}catch(e){}");
-
-	for (var i = 0; i < funcTexts.length; i++) {
-		try {
-			var newFunc = new Function(["x"], funcTexts[i]);
-			functionObjects.push({
-				func: newFunc,
-				color: colorList[colorCount]
-			});
-		} catch (e) {
-			var newFunc = function(x) {
-				return NaN;
-			};
-			functionObjects.push({
-				func: newFunc,
-				color: colorList[colorCount]
-			});
+	if(useJSInterpretation){ //Let's just eval that shi*
+		var funcTexts = funcText.split('\n').map(x => "try{return " + x + "}catch(e){}");
+		for (var i = 0; i < funcTexts.length; i++) {
+			try {
+				var newFunc = new Function(["x"], funcTexts[i]);
+				functionObjects.push({
+					func: newFunc,
+					color: colorList[colorCount]
+				});
+			} catch (e) {
+				var newFunc = function(x) {
+					return NaN;
+				};
+				functionObjects.push({
+					func: newFunc,
+					color: colorList[colorCount]
+				});
+			}
+			colorCount++;
+			if (colorCount == colorList.length) {
+				colorCount = 0;
+			}
 		}
-		colorCount++;
-		if (colorCount == colorList.length) {
-			colorCount = 0;
+	}else{ //Let's use math.js!
+		for (var i = 0; i < funcText.split('\n').length; i++) {
+			var newFunc = function(x, i){
+				const scope = {
+					x: x, 
+					t: Date.now()
+				};
+				try { //We must try catch here, because this is only evaluated at the renderer, unlike JS
+					return math.eval(funcText.split('\n')[i], scope);
+				} catch (e) {
+					return NaN;
+				}
+			}
+			functionObjects.push({
+				func: newFunc,
+				color: colorList[colorCount]
+			});
+			colorCount++;
+			if (colorCount == colorList.length) {
+				colorCount = 0;
+			}
 		}
 	}
 }
@@ -159,6 +189,7 @@ var changeURL = function(){
 	newURL += "?function=" + encodeURIComponent(funcText);
 	newURL += "&divisionCount=" + encodeURIComponent(divisionCount);
 	newURL += "&useSecantRendering=" + encodeURIComponent(useSecantRendering);
+	newURL += "&useJSInterpretation=" + encodeURIComponent(useJSInterpretation);
 	newURL += "&plotDensity=" + encodeURIComponent(plotDensity);
 	newURL += "&combineZoom=" + encodeURIComponent(combineZoom);
 	newURL += "&modifierZoom=" + encodeURIComponent(modifierZoom);
@@ -235,10 +266,10 @@ drawLoop = function(){
 			ctx.strokeStyle = functionObjects[i].color;
 			ctx.fillStyle = functionObjects[i].color;
 			var x1 = k + pixelMid;
-			var y1 = (-functionObjects[i].func(k * scaleX) * scaleY) + pixelMid;
+			var y1 = (-functionObjects[i].func(k * scaleX, i) * scaleY) + pixelMid;
 			if (useSecantRendering) {
 				var x2 = (k - plotDensity) + pixelMid;
-				var y2 = (-functionObjects[i].func((k - plotDensity) * scaleX) * scaleY) + pixelMid;
+				var y2 = (-functionObjects[i].func((k - plotDensity) * scaleX, i) * scaleY) + pixelMid;
 				if (
 					x1 > (0 - secantBoundOffset) &&
 					x1 <= (screenWidth + secantBoundOffset) &&

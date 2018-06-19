@@ -136,11 +136,11 @@ var calculateValues = function(){
 var evaluateFunctions = function(){
 	functionObjects = [];
 	var colorCount = 0;
+	var funcTexts = funcText.split('\n');
 	if(useJSInterpretation){ //Let's just eval that shi*
-		var funcTexts = funcText.split('\n').map(x => "try{return " + x + "}catch(e){}");
 		for (var i = 0; i < funcTexts.length; i++) {
 			try {
-				var newFunc = new Function(["x"], funcTexts[i]);
+				var newFunc = new Function(["x"], "try{return " + funcTexts[i] + "}catch(e){}");
 				functionObjects.push({
 					func: newFunc,
 					color: colorList[colorCount]
@@ -160,22 +160,30 @@ var evaluateFunctions = function(){
 			}
 		}
 	}else{ //Let's use math.js!
-		for (var i = 0; i < funcText.split('\n').length; i++) {
-			var newFunc = function(x, i){
-				const scope = {
-					x: x, 
-					t: Date.now()
-				};
-				try { //We must try catch here, because this is only evaluated at the renderer, unlike JS
-					return math.eval(funcText.split('\n')[i], scope);
-				} catch (e) {
-					return NaN;
+		for (var i = 0; i < funcTexts.length; i++) {
+			try {
+				const mathNode = math.parse(funcTexts[i]);
+				const mathCode = mathNode.compile();
+				var newFunc = function(x){
+					const scope = {
+						x: x, 
+						t: Date.now()
+					};
+					return mathCode.eval(scope);
 				}
+				functionObjects.push({
+					func: newFunc,
+					color: colorList[colorCount]
+				});
+			} catch (e) {
+				var newFunc = function(x) {
+					return NaN;
+				};
+				functionObjects.push({
+					func: newFunc,
+					color: colorList[colorCount]
+				});
 			}
-			functionObjects.push({
-				func: newFunc,
-				color: colorList[colorCount]
-			});
 			colorCount++;
 			if (colorCount == colorList.length) {
 				colorCount = 0;
@@ -261,15 +269,15 @@ drawLoop = function(){
 
 	//Draw functions
 	ctx.lineWidth = functionStrokeWeight;
-	for (var k = -pixelMid; k <= pixelMid + plotDensity; k = k + plotDensity) {
-		for (var i = 0; i < functionObjects.length; i++) {
+	for (var k = -pixelMid; k <= pixelMid + plotDensity; k = k + plotDensity) { //From left to right on x axis
+		for (var i = 0; i < functionObjects.length; i++) { //For each function
 			ctx.strokeStyle = functionObjects[i].color;
 			ctx.fillStyle = functionObjects[i].color;
 			var x1 = k + pixelMid;
-			var y1 = (-functionObjects[i].func(k * scaleX, i) * scaleY) + pixelMid;
+			var y1 = (-functionObjects[i].func(k * scaleX, i) * scaleY) + pixelMid; //Evaluate point
 			if (useSecantRendering) {
 				var x2 = (k - plotDensity) + pixelMid;
-				var y2 = (-functionObjects[i].func((k - plotDensity) * scaleX, i) * scaleY) + pixelMid;
+				var y2 = (-functionObjects[i].func((k - plotDensity) * scaleX, i) * scaleY) + pixelMid; //Evaluate second secant point
 				if (
 					x1 > (0 - secantBoundOffset) &&
 					x1 <= (screenWidth + secantBoundOffset) &&

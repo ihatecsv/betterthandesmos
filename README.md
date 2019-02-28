@@ -1,4 +1,4 @@
-# Better than Desmos™
+# Better than Desmos
 A graphing calculator, based on evaluating JavaScript expressions!
 
 ![Screenshot](https://i.imgur.com/cIVYcO0.png)

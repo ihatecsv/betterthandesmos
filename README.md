@@ -1,6 +1,8 @@
 # Better than Desmos
 A graphing calculator, based on evaluating JavaScript expressions!
 
+This is not a secure application. I do not suggest deploying it in a multi-user environment.
+
 ![Screenshot](https://i.imgur.com/cIVYcO0.png)
 
 You can access the calculator [here](https://drakeluce.com/projects/betterthandesmos/), and the default functions can be seen on Desmos [here](https://www.desmos.com/calculator/q8krvyo0cl).
